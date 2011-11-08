@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block body %}
+<form action="/user" method="POST">
+<fieldset>
+	<legend>Update User</legend>
+	<label>First Name</label><input type="text" name="first_name" value="{{ first_name }}"><br />
+	<label>Last Name</label><input type="text" name="last_name" value="{{ last_name }}"><br />
+	<label>Email</label><input type="text" name="email" value="{{ email }}"><br />
+	<input type="hidden" name="key" value="{{ key }}" />
+	<button>Update</button>
+</fieldset>
+</form>
+{% endblock %}

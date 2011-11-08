@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block body %}
+<form action="/login" method="post" id="login_form">
+<fieldset>
+	<legend>Login Form</legend>
+	<label>Email</label>
+	<input type="text" name="email" placeholder="Your email" /><br />
+	<label>Password</label>
+	<input type="password" name="password" placeholder="Your password" /><br />
+	<input type="hidden" name="redirect" value="{{ redirect }}" />
+	<button>Login</button>
+</fieldset>
+</form>
+{% endblock %}

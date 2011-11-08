@@ -1,0 +1,93 @@
+body {
+	margin: 0px;
+	font:normal 13px/18px helvetica,arial,sans-serif;
+	color:#333;
+}
+
+label{
+	float: left;
+	width: 120px;
+	font-weight: bold;
+}
+
+input, textarea{
+	width: 200px;
+	margin-bottom: 5px;
+}
+
+#login {
+	margin-top: 2px;
+	font-size: 12pt;
+	float: right;
+}
+
+#small_login_form { 
+	margin-top: 28px;
+	display: none; 
+}
+
+#small_login_form label {
+	width: 70px;
+	font-size: 10pt;
+	padding-top: 4px;
+}
+
+#small_login_form fieldset { 
+	width: 300px;
+}
+
+#content {
+	padding: 4px;
+}
+
+#header {
+	padding: 10px;
+	font-size: 20pt;
+	border-bottom: 1px dashed black;
+}
+
+#header a:link {
+	text-decoration:none;
+	color: black;
+}
+
+#header a:visited {
+	color: black;
+	text-decoration:none;
+}
+
+.cal_table, .cal_table td {
+	border-collapse: collapse;
+	border: 1px solid black;
+	font-size: 12pt;
+	padding: 4px;
+}
+
+.cal_table td {
+	width: 75px;
+	height: 80px;
+}
+
+.cal_table td:hover {
+	background-color: green;
+	color: white;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.first_month {
+	background-color: #dddddd;
+}
+#new_activity {
+	width: 180px;
+	font-size: 8pt;
+	position: absolute;
+	display: none;
+	background-color: white;
+}
+#new_activity input {
+	width: 100px;
+}
+#new_activity label {
+	width: 50px;
+}

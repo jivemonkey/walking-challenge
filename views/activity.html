@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block body %}
+<script type="text/javascript" src="js/DatePicker.js"></script>
+<form action="/activity" method="POST">
+<fieldset>
+	<label>Count</label><input name="count" /><br />
+	<label>When</label><input name="created" class="date-pick" /><br />
+	<button>Record</butto>
+</fieldset>
+</form>
+<script>
+	$(function() {
+		$( ".date-pick" ).datepicker();
+	});
+	</script>
+{% endblock %}

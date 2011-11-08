@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Walking Challenge</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/smoothness/datepicker.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+</head>
+<body>
+	<div id="header"><a href="/">Walk Challenge</a>
+		{% if _url != '/login' %}
+		<div id="login">
+		{% if login_name %} 
+		<a href="/dashboard">{{ login_name }}</a> | <a href="/logout">Logout</a>
+		{% else %}
+		<span id="login_register"><a id="login_link" href="#">Login</a> | <a href="/register">Register</a></span>
+		{% endif %}
+		<form action="/login" method="post" id="small_login_form">
+			<fieldset>
+			<legend>Login Form</legend>
+			<label>Email</label>
+			<input type="text" name="email" placeholder="Your email" /><br />
+			<label>Password</label>
+			<input type="password" name="password" placeholder="Your password" /><br />
+			<input type="hidden" name="redirect" value="{{ _url }}" />
+			<button>Login</button><button id="login_button">cancel</button>
+			</fieldset>
+		</form>
+		</div>
+		{% endif %}
+	</div>
+	<div id="content">
+	{% block body %}{% endblock %}
+	</div>
+	<script>
+	$("#login_link").click(function() 
+	{
+		$("#small_login_form").toggle(200);
+		$("#login_register").toggle();
+		return false; 
+	});
+	$("#login_button").click(function() 
+	{
+		$("#small_login_form").toggle(200,
+			function(){
+				$("#login_register").toggle();
+			});
+		return false; 
+	});
+</script>
+</body>
+</html>
