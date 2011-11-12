@@ -1,0 +1,207 @@
+body {
+	margin: 0px;
+	font:normal 13px/18px helvetica,arial,sans-serif;
+	color:#333;
+}
+
+label{
+	float: left;
+	width: 120px;
+	font-weight: bold;
+}
+
+input, textarea {
+	width: 200px;
+	margin-bottom: 5px;
+}
+
+#login {
+	margin-top: 2px;
+	font-size: 12pt;
+	float: right;
+}
+
+#small_login_form { 
+	margin-top: 28px;
+	display: none; 
+}
+
+#small_login_form label {
+	width: 70px;
+	font-size: 10pt;
+	padding-top: 4px;
+}
+
+#small_login_form fieldset { 
+	width: 300px;
+}
+
+#content {
+	padding: 4px;
+}
+
+#header {
+	padding: 10px;
+	font-size: 20pt;
+	border-bottom: 1px dashed black;
+}
+
+#header a:link {
+	text-decoration:none;
+	color: black;
+}
+
+#header a:visited {
+	color: black;
+	text-decoration:none;
+}
+
+.cal_table {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.cal_table th {
+	padding: 3px 2px 2px 2px;
+}
+
+.cal_table {
+	border-collapse: collapse;
+}
+
+.cal_table td {
+	width: 78px;
+	height: 73px;
+	border: 1px solid black;
+	font-size: 12pt;
+	padding: 1px;
+	vertical-align: top;
+}
+
+.cal_table td:hover {
+	background-color: green;
+	color: white;
+	cursor: pointer;
+	cursor: hand;
+	vertical-align: top;
+}
+
+.scroll_button {
+	border: 1px solid black;
+	width: 650px;
+	text-align: center;
+}
+
+.scroll_button:hover {
+	background-color: #a0abab;
+	color: white;
+}
+
+.date {
+	font-size: 8pt;
+	margin-bottom: 20px;
+}
+
+.count {
+	text-align: right;
+	margin-right: 4px;
+	font-size: 10pt;
+}
+
+.first_month {
+	background-color: #e0ebeb;
+}
+
+td.total_column, td.total_column:hover {
+	border-right: 1px solid white;
+	vertical-align: bottom;
+	margin: 0px;
+	font-size: 10pt;
+	background-color: white;
+	color: black;
+	cursor: default;
+	text-align: right;
+	width: 83px;
+}
+
+#new_activity {
+	width: 210px;
+	height: 80px
+	font-size: 8pt;
+	position: absolute;
+	display: none;
+	background-color: white;
+	margin: auto;
+	border: 3px solid black;
+	padding: 5px 0px 0px 5px;
+}
+
+#new_activity textarea {
+	width: 200px;
+	height: 40px;
+}
+
+#new_activity input {
+	width: 100px;
+}
+
+#new_activity label {
+	width: 65px;
+}
+
+.today {
+	border: 3px solid black;
+	background-color: #d6ebff;
+}
+
+#ent_stps {
+	text-align: middle;
+	font-size: 10pt;
+}
+
+#content {
+	width: 855px;
+	margin-left: auto;
+	margin-right:auto;
+	//border: 1px solid black;
+}
+
+.post {
+	width: 400px;
+	background-color: #e0ebeb;
+	margin: 3px;
+	vertical-align: top;
+	float: left;
+	padding: 2px;
+}
+
+.post div {
+	margin-top: 3px;
+	padding-left: 15px;
+}
+
+.post img {
+	margin-right: 5px;
+	float: left;
+}
+
+.left_box {
+	width: 200px;
+	margin: 0px;
+	float: left;
+}
+
+.left_box ul {
+	margin-left: -30px;
+	list-style-type: none;
+}
+
+.left_box h3 {
+	margin: 20px 10px 10px 10px;
+	border-bottom: 2px solid black;
+}
+
+.right_box {
+	float: left;
+	margin: 0px;
+}
