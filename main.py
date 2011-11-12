@@ -23,7 +23,7 @@ def require_login(handler):
 		if not auth.get_user_by_session():
 			# If handler has no login_url specified invoke a 403 error
 			try:
-				self.redirect(('/login?redirect=%s'%self.request._environ['PATH_INFO']), abort=True)
+				self.redirect(('/login?redirect=%s'%self.request.environ['PATH_INFO']))
 			except (AttributeError, KeyError), e:
 				self.abort(403)
 		else:

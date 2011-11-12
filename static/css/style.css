@@ -124,6 +124,12 @@ td.total_column, td.total_column:hover {
 	width: 83px;
 }
 
+th.total_column {
+	border-right: 1px solid white;
+	border-top: 1px solid white;
+	font-size: 12px;
+}
+
 #new_activity {
 	width: 210px;
 	height: 80px
