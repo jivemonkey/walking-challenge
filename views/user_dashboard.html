@@ -1,74 +1,111 @@
 {% extends 'layout.html' %}
 {% block body %}
-<div id="chart_div"></div>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
-function drawChart() {
-	var data = new google.visualization.DataTable();
-	data.addColumn('string', 'Date');
-	data.addColumn('number', 'Steps');
-	{% for day in cal %}
-		{%- if day[1] %}
-		data.addRow(['{{ day[0].strftime('%m/%d/%Y') }}',{{ day[1].count }}])
-		{%- else %}
-		data.addRow(['{{ day[0].strftime('%m/%d/%Y') }}', 0])
-		{%- endif %}
-	{% endfor %}
-	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-	chart.draw(data, {width: 600, height: 340, title: 'Steps for last 28 days'});
-}
-</script>
-{% set first_month = cal[0][0].month %}
-<table border="1" class="cal_table">
-{%for i in range(4) %}
-<tr>
-{% for j in range(7) %}
-	<td date="{{cal[j+(i*7)][0].strftime('%m/%d/%Y')}}" count="{{cal[j+(i*7)][1].count}}"
-	{% if cal[j+(i*7)][0].month == first_month %}class="first_month">{% else %}<td class="last_month">{% endif %}
-	<div>{{ cal[j+(i*7)][0].strftime('%m/%d') }}</div>
-	<div>
-	{%- if cal[j+(i*7)][1] %}
-		{{cal[j+(i*7)][1].count}}
-	{% else %}
-		N/A
-	{% endif %}
+<div class="left_box">
+	<img width="160" height="160" src="/static/images/head.jpg" /><br>
+	<div class="info">
+	<h3>{{ login_name }} Stats</h3>
+	<ul>
+	<li>Goal: Set Goal</li>
+	<li>B</li>
+	<li>C</li>
+	<li>D</li>
+	</ul>
 	</div>
-	</td>
-{% endfor %}
-</tr>
-{% endfor %}
-</table>
-<div id="new_activity"">
-<script type="text/javascript" src="js/DatePicker.js"></script>
-<form action="/activity" method="POST">
-<fieldset>
-	<label>Steps</label><input name="count" /><br />
-	<label>When</label><input name="created" class="date-pick" /><br />
-	<input type="hidden" name="key" value="" />
-	<button>Record</button><button id="cancel">Cancel</button>
-</fieldset>
-</form>
-<script>
-	$(function() {
-		$( ".date-pick" ).datepicker();
-	});
-	$("#cancel").click(function() {$("#new_activity").hide(); return false;});
-</script>
+	<div class="compitition_list">
+	<h3>Challenge(s)</h3>
+	<ul>
+	<li>TBD</li>
+	</ul>
+	</div>
+	<div class="goal_list">
+	<h3>Groups</h3>
+	<ul>
+	<li>Add Group</li>
+	</ul>
+	</div>
 </div>
-<a href="/activity">Add Activity</a> |
-<a href="/user">User Info</a>
-<script>
-	function activityPopUp(count,date,key)
-	{
+<div class="right_box">
+	<div id="chart_div"></div>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Date');
+		data.addColumn('number', 'Steps');
+		{% for day in cal %}
+			{%- if day[1] %}
+			data.addRow(['{{ day[0].strftime('%m/%d') }}',{{ day[1].count }}])
+			{%- else %}
+			data.addRow(['{{ day[0].strftime('%m/%d') }}', 0])
+			{%- endif %}
+		{% endfor %}
+		var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+		chart.draw(data, {width: 610, height: 150, title: 'Steps for last 28 days'});
 	}
-	$("td").click(function() {
-			$("input[name='created']").val($(this).attr('date'));
-			$("input[name='count']").val($(this).attr('count'));
-			var offset = $(this).offset();
-			$("#new_activity").show();
-			$("#new_activity").offset({top: offset.top, left: offset.left});
+	</script>
+	{% set first_month = cal[0][0].month %}
+	<div class="scroll_button">&#x25B2;</div>
+	<table border="1" class="cal_table">
+	<tr>
+	<th>Mon</th><th>Tue</th><th>Wed</th>
+	<th>Thu</th><th>Fri</th>
+	<th>Sat</th><th>Sun</th><th>Total</th>
+	</tr>
+	{%for i in range(5) %}
+	<tr>
+	{% for j in range(7) %}
+		<td comment="{{ cal[j+(i*7)][1].comment or '' }}" 
+			date="{{cal[j+(i*7)][0].strftime('%m/%d/%Y')}}" 
+			count="{{cal[j+(i*7)][1].count}}"
+		{%- if cal[j+(i*7)][0] == today %}
+		class="today">
+		{%- elif cal[j+(i*7)][0].month == first_month %}
+		class="first_month">
+		{%- else %}
+		class="last_month">
+		{%- endif %}
+		<div class="date">{{ cal[j+(i*7)][0].strftime('%m/%d') }}</div>
+		{%- if cal[j+(i*7)][1] %}
+		<div class="count">{{cal[j+(i*7)][1].count}} steps</div>
+		{% else %}
+		<div id="ent_stps"></div>
+		{% endif %}
+		</div>
+		</td>
+	{% endfor %}
+	<td class="total_column">{{ week_total[i] }} steps</td>
+	</tr>
+	{% endfor %}
+	</table>
+	<div class="scroll_button">&#x25BC;</div>
+	<div id="new_activity"">
+	<script type="text/javascript" src="/static/js/DatePicker.js"></script>
+	<form action="/activity" method="POST">
+		<label>Steps</label><input name="count" /><br />
+		<label>When</label><input name="created" class="date-pick" /><br />
+		<label>Comment</label><textarea name="comment"></textarea> 
+		<input type="hidden" name="key" value="" />
+		<button>Record</button><button id="cancel">Cancel</button>
+	</form>
+	<script>
+		$(function() {
+			$( ".date-pick" ).datepicker();
 		});
-</script>
+		$("#cancel").click(function() {$("#new_activity").hide(); return false;});
+	</script>
+	</div>
+	<a href="/user">User Info</a>
+	<script>
+	$("td.first_month, td.last_month, td.today").click(function() {
+		$("input[name='created']").val($(this).attr('date'));
+		$("input[name='count']").val($(this).attr('count'));
+		$("textarea[name='comment']").val($(this).attr('comment'));
+		var offset = $(this).offset();
+		$("#new_activity").show();
+		$("#new_activity").offset({top: offset.top - 40, left: offset.left-40});
+	});
+	</script>
+</div>
 {% endblock %}

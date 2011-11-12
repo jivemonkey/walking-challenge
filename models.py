@@ -114,6 +114,7 @@ class Activity(db.Model):
 	created = db.DateTimeProperty(auto_now_add=True)
 	count = db.IntegerProperty(required=True)
 	type = db.StringProperty(required=True)
+	comment = db.StringProperty()
 	
 class Compitition(db.Model):
 	start = db.DateTimeProperty(required=True)
@@ -123,4 +124,5 @@ class Compitition(db.Model):
 class Comment(db.Model):
 	created = db.DateTimeProperty(auto_now_add=True)
 	text = db.StringProperty(required=True)
+	user_id = db.ReferenceProperty()
 	parent_comment = db.SelfReferenceProperty()

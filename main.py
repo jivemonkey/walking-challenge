@@ -7,7 +7,8 @@ from webapp2_extras import auth
 from webapp2_extras import sessions
 from google.appengine.ext import db
 import logging
-from datetime import datetime,timedelta	
+from datetime import datetime,timedelta
+from pytz.gae import pytz
 
 jenv = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/views/"))
@@ -66,7 +67,7 @@ class BaseHandler(webapp2.RequestHandler):
 			
 		template = jenv.get_template(template)
 		self.response.out.write(template.render(*args,**kwargs))
-		
+
 # Handle index
 class MainPage(BaseHandler):
 	def get(self):
@@ -189,7 +190,7 @@ class ChangePassword(BaseHandler):
 			self.redirect('/')
 		except(Exception), e:
 			self.response.out.write(e)
-			
+
 class Logout(BaseHandler):
 	"""
 		Destroy user session and redirect to login
@@ -212,12 +213,14 @@ class Activity(BaseHandler):
 		user_vars = self.auth.get_user_by_session()
 		created = self.request.POST.get('created')
 		count = self.request.POST.get('count')
+		comment = self.request.POST.get('comment')
 		
 		try:
 			activity = models.Activity(key_name="%s:%s"%(user_vars['user_id'],created),
 									count=int(count), 
 									created=datetime.strptime(created,'%m/%d/%Y'), 
 									type="walking", 
+									comment=comment,
 									parent=user_vars['user_id'])
 			activity.put()
 			self.redirect('/dashboard')
@@ -229,19 +232,50 @@ class UserDashBoard(BaseHandler):
 	def get(self):
 		user_vars = self.auth.get_user_by_session()
 		activities = models.Activity.gql('WHERE ANCESTOR IS :1 order by created', user_vars['user_id'])
-		now = datetime.now()
+		tz = pytz.timezone('US/Pacific')
+		now = datetime.now(tz)
+		dow = now.weekday()
+		
 		now = datetime(now.year,now.month,now.day)
-		start = now - timedelta(days=28)
+
+		start = now - timedelta(days=28+dow)
+		end = now + timedelta(days=(6-dow))
 
 		cal = {}
-		while start <= now:
-			cal[start] = None;
-			start = start + timedelta(days=1)
-		
+		week_total= [0,0,0,0,0,]
+		week_count=0
+		day = 0
 		for activity in activities:
 			cal[activity.created] = activity
+			
+		while start <= end:
+			if start not in cal:
+				cal[start] = None;
+			else:
+				week_total[week_count] += cal[start].count
+			start = start + timedelta(days=1)
+			if ((day+1) % 7) == 0:
+				week_count += 1
+			day += 1
 		
-		self.respond('user_dashboard.html', cal=sorted(cal.iteritems()))
+		self.respond('user_dashboard.html', cal=sorted(cal.iteritems()), today=now, week_total=week_total)
+
+class CompititionDashboard(BaseHandler):
+	def get(self):
+		self.respond('compitition_dashboard.html')
+
+class CommentCreate(BaseHandler):
+	def post(self):
+		user_vars = self.auth.get_user_by_session()
+		activity_id = self.request.POST.get('activity_id')
+		text = self.request.POST.get('text')
+		
+		comment = models.Comment(parent=account_id, text=text, user_id=user_vars['user_id'])
+		
+		try:
+			comment.put()
+		except Exception, e:
+			self.reponse.out.write(e)
 
 # List of compitition winners
 class LeaderBoard(BaseHandler):
@@ -272,6 +306,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
 							('/logout', Logout),
 							('/activity', Activity),
 							('/dashboard',UserDashBoard),
+							('/comment', CommentCreate),
+							('/compitition', CompititionDashboard),
 							('/req', ReqLook)],
 							config = config,
                             debug=True)
