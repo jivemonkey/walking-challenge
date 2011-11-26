@@ -2,6 +2,9 @@ body {
 	margin: 0px;
 	font:normal 13px/18px helvetica,arial,sans-serif;
 	color:#333;
+	background-image: url('/static/images/side_banner.jpg');
+	background-color: #F1F1EA;
+	background-repeat:no-repeat;
 }
 
 label{
@@ -36,23 +39,21 @@ input, textarea {
 	width: 300px;
 }
 
-#content {
-	padding: 4px;
-}
-
 #header {
-	padding: 10px;
-	font-size: 20pt;
-	border-bottom: 1px dashed black;
+	padding: 15px 10px 10px 15px;
+	font-size: 24pt;
+	border-bottom: 3px solid #F1F1EA;
+	background-color: #008A2E;
+	height: 30px;
 }
 
 #header a:link {
 	text-decoration:none;
-	color: black;
+	color: #F1F1EA;
 }
 
 #header a:visited {
-	color: black;
+	color: #F1F1EA;
 	text-decoration:none;
 }
 
@@ -162,14 +163,22 @@ th.total_column {
 
 #ent_stps {
 	text-align: middle;
-	font-size: 10pt;
+	font-size: 10pt;	
 }
 
 #content {
-	width: 855px;
+	width: 680px;
 	margin-left: auto;
 	margin-right:auto;
 	//border: 1px solid black;
+	height: 600px;
+}
+
+#left_stop {
+	//border: 1px solid black;
+	float: left;
+	width: 220px;
+	height: 600px;
 }
 
 .post {
@@ -192,11 +201,21 @@ th.total_column {
 }
 
 .left_box {
-	width: 200px;
-	margin: 0px;
+	height: 140px;
+	margin: 20px 0px 0px 0px;
+}
+.info {
+	width: 33%;
 	float: left;
 }
-
+.goal_list {
+	width: 33%;
+	float: left;
+}
+.compitition_list {
+	width: 33%;
+	float: left;
+}
 .left_box ul {
 	margin-left: -30px;
 	list-style-type: none;

@@ -14,22 +14,22 @@ class User(db.Model):
 	
 	# Creation date.
 	created = db.DateTimeProperty(auto_now_add=True)
-    
+
 	# Modification date.
 	updated = db.DateTimeProperty(auto_now=True)
-    
+
 	# User defined unique name, also used as key_name.
 	first_name = db.StringProperty(required=True)
-    
-    # User defined unique name, also used as key_name.
+
+	# User defined unique name, also used as key_name.
 	last_name = db.StringProperty(required=True)
-    
+
 	# Password, only set for own authentication.
 	password = db.StringProperty(required=False)
-    
+
 	# User email
 	email = db.StringProperty(required=False)
-    
+
 	# Admin flag.
 	is_admin = db.BooleanProperty(default=False)
 
@@ -59,8 +59,8 @@ class User(db.Model):
 		"""
 		Returns a user object based on a user ID and token.
 		:param user_id: The user_id of the requesting user.
-        :param token: The token string to be verified.
-        :returns: A tuple ``(User, timestamp)``, with a user object and
+		:param token: The token string to be verified.
+		:returns: A tuple ``(User, timestamp)``, with a user object and
 		the token timestamp, or ``(None, None)`` if both were not found.
 		"""
 		if cls.make_password_hash(str(user_id)) != token:
@@ -87,10 +87,10 @@ class User(db.Model):
 		logging.debug('password: %s'%password)
 		
 		user = cls.gql("WHERE email = :1 and password = :2", auth_id, password).get()
-        
+
 		if not user:
 			raise auth.InvalidAuthIdError()
-        	
+
 		return user
 
 	@classmethod
@@ -114,7 +114,7 @@ class Activity(db.Model):
 	created = db.DateTimeProperty(auto_now_add=True)
 	count = db.IntegerProperty(required=True)
 	type = db.StringProperty(required=True)
-	comment = db.StringProperty()
+	comment = db.StringProperty(multiline=True)
 	
 class Compitition(db.Model):
 	start = db.DateTimeProperty(required=True)
@@ -123,6 +123,6 @@ class Compitition(db.Model):
 	
 class Comment(db.Model):
 	created = db.DateTimeProperty(auto_now_add=True)
-	text = db.StringProperty(required=True)
+	text = db.StringProperty(required=True, multiline=True)
 	user_id = db.ReferenceProperty()
 	parent_comment = db.SelfReferenceProperty()

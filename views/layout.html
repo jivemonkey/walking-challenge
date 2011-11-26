@@ -1,12 +1,12 @@
 <html>
 <head>
-<title>Walking Challenge</title>
+<title>Daily Fitness Goals</title>
 <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
 <link rel="stylesheet" type="text/css" href="/static/css/smoothness/datepicker.css" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 </head>
 <body>
-	<div id="header"><a href="/">Walk Challenge</a>
+	<div id="header"><a href="/">Daily Fitness Goals</a>
 		{% if _url != '/login' %}
 		<div id="login">
 		{% if login_name %} 
@@ -28,6 +28,7 @@
 		</div>
 		{% endif %}
 	</div>
+	<div id="left_stop"></div>
 	<div id="content">
 	{% block body %}{% endblock %}
 	</div>
@@ -46,6 +47,6 @@
 			});
 		return false; 
 	});
-</script>
+	</script>
 </body>
 </html>
